@@ -3,6 +3,68 @@ import {Component, Fragment} from 'react';
 import Button from 'sentry/components/button';
 import Tooltip from 'sentry/components/tooltip';
 
+import styled from '@emotion/styled';
+
+export const TooltipIndicator = () => {
+  return (
+    <Container>
+      <Tooltip title="Hello this is a tooltip">
+        <Text>Sample text gg</Text>
+      </Tooltip>
+      <Tooltip title="Hello this is a tooltip">
+        <TextDark>Sample text gg</TextDark>
+      </Tooltip>
+      <Tooltip title="Hello this is a tooltip">
+        <TextDotted>Sample text gg</TextDotted>
+      </Tooltip>
+      <Tooltip title="Hello this is a tooltip">
+        <TextDottedDark>Sample text gg</TextDottedDark>
+      </Tooltip>
+    </Container>
+  );
+};
+
+const Container = styled('div')`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Text = styled('p')`
+  text-decoration-color: ${p => p.theme.border};
+  text-decoration-style: dashed;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+  font-size: ${p => p.theme.fontSizeMedium};
+`;
+
+const TextDark = styled('p')`
+  text-decoration-color: ${p => p.theme.subText};
+  text-decoration-style: dashed;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+  font-size: ${p => p.theme.fontSizeMedium};
+`;
+
+const TextDotted = styled('p')`
+  text-decoration-color: ${p => p.theme.border};
+  text-decoration-style: dotted;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+  font-size: ${p => p.theme.fontSizeMedium};
+`;
+
+const TextDottedDark = styled('p')`
+  text-decoration-color: ${p => p.theme.subText};
+  text-decoration-style: dotted;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+  font-size: ${p => p.theme.fontSizeMedium};
+`;
+
 class CustomThing extends Component {
   render() {
     return <span>A class component with no ref</span>;
