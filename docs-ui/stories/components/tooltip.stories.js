@@ -9,16 +9,16 @@ export const TooltipIndicator = () => {
   return (
     <Container>
       <Tooltip title="Hello this is a tooltip">
-        <Text>Sample text gg</Text>
+        <Text>eg. tooltip</Text>
       </Tooltip>
       <Tooltip title="Hello this is a tooltip">
-        <TextDark>Sample text gg</TextDark>
+        <TextDark>eg. tooltip</TextDark>
       </Tooltip>
       <Tooltip title="Hello this is a tooltip">
-        <TextDotted>Sample text gg</TextDotted>
+        <TextDotted>eg. tooltip</TextDotted>
       </Tooltip>
       <Tooltip title="Hello this is a tooltip">
-        <TextDottedDark>Sample text gg</TextDottedDark>
+        <TextDottedDark>eg. tooltip</TextDottedDark>
       </Tooltip>
     </Container>
   );
@@ -27,6 +27,7 @@ export const TooltipIndicator = () => {
 const Container = styled('div')`
   display: flex;
   flex-direction: column;
+  align-items: start;
 `;
 
 const Text = styled('p')`
