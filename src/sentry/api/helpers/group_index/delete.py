@@ -8,7 +8,15 @@ from rest_framework.response import Response
 
 from sentry import eventstream
 from sentry.api.base import audit_logger
-from sentry.models import Group, GroupHash, GroupInbox, GroupStatus, Project
+from sentry.models import (
+    Group,
+    GroupHash,
+    GroupInbox,
+    GroupRelease,
+    GroupStatus,
+    Project,
+    ReleaseProject,
+)
 from sentry.signals import issue_deleted
 from sentry.tasks.deletion import delete_groups as delete_groups_task
 from sentry.utils.audit import create_audit_entry
@@ -39,6 +47,25 @@ def delete_group_list(
 
     eventstream_state = eventstream.start_delete_groups(project.id, group_ids)
     transaction_id = uuid4().hex
+
+    # deleting this group/issue does not simply mean we can decrement the counter
+    # we must check the deleted group is the last one being deleted to ensure we don't double-decrement
+    # look into GroupHash and ensure
+
+    # start updating new_groups count
+
+    # project
+    # groups = []
+    # deletes are probably safe to not-buffer since it's a manual action
+
+    # id | project_id | group_id | release_id | environment
+    GroupRelease.objects.filter()
+
+    # need to decrement new_groups when we delete a group
+    # id | new_groups | project_id | release_id
+    ReleaseProject.objects.filter().update()
+
+    # end updating new_groups count
 
     # We do not want to delete split hashes as they are necessary for keeping groups... split.
     GroupHash.objects.filter(
