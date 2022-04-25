@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from '@emotion/styled';
 import trimStart from 'lodash/trimStart';
-import uniqBy from 'lodash/uniqBy';
 
 import SelectControl from 'sentry/components/forms/selectControl';
 import Tooltip from 'sentry/components/tooltip';
@@ -11,9 +10,7 @@ import {SelectValue, TagCollection} from 'sentry/types';
 import {
   EQUATION_PREFIX,
   explodeField,
-  explodeFieldString,
   generateFieldAsString,
-  getAggregateAlias,
   getEquation,
   isEquation,
 } from 'sentry/utils/discover/fields';
@@ -21,14 +18,10 @@ import Measurements from 'sentry/utils/measurements/measurements';
 import useOrganization from 'sentry/utils/useOrganization';
 import {DisplayType, WidgetType} from 'sentry/views/dashboardsV2/types';
 import ArithmeticInput from 'sentry/views/eventsV2/table/arithmeticInput';
-import {FieldValueOption, QueryField} from 'sentry/views/eventsV2/table/queryField';
+import {QueryField} from 'sentry/views/eventsV2/table/queryField';
+import {FieldValueKind} from 'sentry/views/eventsV2/table/types';
 
-import {
-  filterPrimaryOptions,
-  getAmendedFieldOptions,
-  SortDirection,
-  sortDirections,
-} from '../../utils';
+import {getAmendedFieldOptions, SortDirection, sortDirections} from '../../utils';
 
 const CUSTOM_EQUATION_VALUE = 'custom-equation';
 
@@ -48,16 +41,7 @@ interface Props {
   hasGroupBy?: boolean;
 }
 
-export function SortBySelectors({
-  displayType,
-  values,
-  sortByOptions,
-  widgetType,
-  onChange,
-  hasGroupBy,
-  tags,
-  explodedField,
-}: Props) {
+export function SortBySelectors({values, widgetType, onChange, hasGroupBy, tags}: Props) {
   const organization = useOrganization();
   const [showCustomEquation, setShowCustomEquation] = useState(false);
   const [customEquation, setCustomEquation] = useState<Values>({
@@ -75,11 +59,6 @@ export function SortBySelectors({
     setShowCustomEquation(isSortingByEquation);
   }, [values.sortBy]);
 
-  console.log('exploded field', explodedField);
-  console.log('string?', typeof explodedField);
-  if (typeof explodedField === 'string') {
-    console.log('string', explodeField({field: explodedField}));
-  }
   return (
     <Wrapper>
       <Tooltip
@@ -100,7 +79,6 @@ export function SortBySelectors({
           }))}
           value={values.sortDirection}
           onChange={(option: SelectValue<SortDirection>) => {
-            debugger;
             onChange({
               sortBy: values.sortBy,
               sortDirection: option.value,
@@ -111,8 +89,26 @@ export function SortBySelectors({
       <Measurements>
         {({measurements}) => (
           <QueryField
-            fieldValue={explodeField({field: values.sortBy})}
-            fieldOptions={getAmendedFieldOptions({measurements, organization, tags})}
+            fieldValue={
+              showCustomEquation
+                ? explodeField({field: CUSTOM_EQUATION_VALUE})
+                : explodeField({field: values.sortBy})
+            }
+            fieldOptions={{
+              ...(hasGroupBy
+                ? {
+                    'field:custom-equation': {
+                      label: 'Custom Equation',
+                      value: {
+                        kind: FieldValueKind.FIELD,
+                        meta: {name: 'custom-equation', dataType: 'string'},
+                      },
+                    },
+                  }
+                : {}),
+
+              ...getAmendedFieldOptions({measurements, organization, tags}),
+            }}
             onChange={value => {
               const parsedValue = generateFieldAsString(value);
               const isSortingByCustomEquation = parsedValue === CUSTOM_EQUATION_VALUE;

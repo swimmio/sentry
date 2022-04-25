@@ -8,7 +8,6 @@ import SelectControl from 'sentry/components/forms/selectControl';
 import {t, tn} from 'sentry/locale';
 import space from 'sentry/styles/space';
 import {Organization, SelectValue, TagCollection} from 'sentry/types';
-import {explodeField} from 'sentry/utils/discover/fields';
 import {DisplayType, WidgetQuery, WidgetType} from 'sentry/views/dashboardsV2/types';
 import {generateIssueWidgetOrderOptions} from 'sentry/views/dashboardsV2/widgetBuilder/issueWidget/utils';
 import {IssueSortOptions} from 'sentry/views/issueList/utils';
