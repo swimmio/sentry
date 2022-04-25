@@ -16,6 +16,7 @@ import {DataSet, getResultsLimit, SortDirection} from '../../utils';
 import {BuildStep} from '../buildStep';
 
 import {SortBySelectors} from './sortBySelectors';
+import {FieldValueKind} from 'sentry/views/eventsV2/table/types';
 
 interface Props {
   dataSet: DataSet;
@@ -61,6 +62,8 @@ export function SortByStep({
       onLimitChange(maxLimit);
     }
   }, [limit, maxLimit]);
+
+  const columnSet = new Set(queries[0].columns);
 
   if (widgetBuilderNewDesign) {
     return (
@@ -124,6 +127,17 @@ export function SortByStep({
               onSortByChange(newOrderBy);
             }}
             tags={tags}
+            filterPrimaryOptions={option => {
+              console.log(option);
+              if (option.value.kind === FieldValueKind.FUNCTION) {
+                return true;
+              }
+
+              return (
+                columnSet.has(option.value.meta.name) ||
+                option.value.meta.name === 'custom-equation'
+              );
+            }}
           />
         </Field>
       </BuildStep>

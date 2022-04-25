@@ -32,6 +32,8 @@ interface Values {
 
 interface Props {
   displayType: DisplayType;
+  // TODO: type
+  filterPrimaryOptions: any;
   onChange: (values: Values) => void;
   sortByOptions: SelectValue<string>[];
   tags: TagCollection;
@@ -41,7 +43,14 @@ interface Props {
   hasGroupBy?: boolean;
 }
 
-export function SortBySelectors({values, widgetType, onChange, hasGroupBy, tags}: Props) {
+export function SortBySelectors({
+  values,
+  widgetType,
+  onChange,
+  hasGroupBy,
+  tags,
+  filterPrimaryOptions,
+}: Props) {
   const organization = useOrganization();
   const [showCustomEquation, setShowCustomEquation] = useState(false);
   const [customEquation, setCustomEquation] = useState<Values>({
@@ -123,6 +132,7 @@ export function SortBySelectors({values, widgetType, onChange, hasGroupBy, tags}
                 sortDirection: values.sortDirection,
               });
             }}
+            filterPrimaryOptions={filterPrimaryOptions}
             // filterPrimaryOptions={option =>
             //   filterPrimaryOptions({
             //     option,
