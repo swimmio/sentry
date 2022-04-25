@@ -147,6 +147,7 @@ export function YAxisSelector({
 
   const canDelete = aggregates.length > 1;
 
+  console.log(aggregates);
   const hideAddYAxisButtons =
     ([DisplayType.WORLD_MAP, DisplayType.BIG_NUMBER].includes(displayType) &&
       aggregates.length === 1) ||

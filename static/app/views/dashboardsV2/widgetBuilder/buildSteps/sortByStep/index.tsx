@@ -1,12 +1,14 @@
 import {useEffect} from 'react';
 import styled from '@emotion/styled';
+import trimStart from 'lodash/trimStart';
 
 import {generateOrderOptions} from 'sentry/components/dashboards/widgetQueriesForm';
 import Field from 'sentry/components/forms/field';
 import SelectControl from 'sentry/components/forms/selectControl';
 import {t, tn} from 'sentry/locale';
 import space from 'sentry/styles/space';
-import {Organization, SelectValue} from 'sentry/types';
+import {Organization, SelectValue, TagCollection} from 'sentry/types';
+import {explodeField} from 'sentry/utils/discover/fields';
 import {DisplayType, WidgetQuery, WidgetType} from 'sentry/views/dashboardsV2/types';
 import {generateIssueWidgetOrderOptions} from 'sentry/views/dashboardsV2/widgetBuilder/issueWidget/utils';
 import {IssueSortOptions} from 'sentry/views/issueList/utils';
@@ -23,6 +25,7 @@ interface Props {
   onSortByChange: (newSortBy: string) => void;
   organization: Organization;
   queries: WidgetQuery[];
+  tags: TagCollection;
   widgetBuilderNewDesign: boolean;
   widgetType: WidgetType;
   error?: string;
@@ -40,6 +43,7 @@ export function SortByStep({
   error,
   limit,
   onLimitChange,
+  tags,
 }: Props) {
   const orderBy = queries[0].orderby;
   const maxLimit = getResultsLimit(queries.length, queries[0].aggregates.length);
@@ -93,6 +97,7 @@ export function SortByStep({
               />
             )}
           <SortBySelectors
+            displayType={displayType}
             widgetType={widgetType}
             hasGroupBy={isTimeseriesChart && !!queries[0].columns.length}
             sortByOptions={
@@ -112,13 +117,14 @@ export function SortByStep({
                 orderBy[0] === '-'
                   ? SortDirection.HIGH_TO_LOW
                   : SortDirection.LOW_TO_HIGH,
-              sortBy: orderBy[0] === '-' ? orderBy.substring(1, orderBy.length) : orderBy,
+              sortBy: trimStart(orderBy, '-'),
             }}
             onChange={({sortDirection, sortBy}) => {
               const newOrderBy =
                 sortDirection === SortDirection.HIGH_TO_LOW ? `-${sortBy}` : sortBy;
               onSortByChange(newOrderBy);
             }}
+            tags={tags}
           />
         </Field>
       </BuildStep>

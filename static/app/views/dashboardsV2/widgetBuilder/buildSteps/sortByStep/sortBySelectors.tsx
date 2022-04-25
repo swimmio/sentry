@@ -7,12 +7,28 @@ import SelectControl from 'sentry/components/forms/selectControl';
 import Tooltip from 'sentry/components/tooltip';
 import {t} from 'sentry/locale';
 import space from 'sentry/styles/space';
-import {SelectValue} from 'sentry/types';
-import {EQUATION_PREFIX, getEquation, isEquation} from 'sentry/utils/discover/fields';
-import {WidgetType} from 'sentry/views/dashboardsV2/types';
+import {SelectValue, TagCollection} from 'sentry/types';
+import {
+  EQUATION_PREFIX,
+  explodeField,
+  explodeFieldString,
+  generateFieldAsString,
+  getAggregateAlias,
+  getEquation,
+  isEquation,
+} from 'sentry/utils/discover/fields';
+import Measurements from 'sentry/utils/measurements/measurements';
+import useOrganization from 'sentry/utils/useOrganization';
+import {DisplayType, WidgetType} from 'sentry/views/dashboardsV2/types';
 import ArithmeticInput from 'sentry/views/eventsV2/table/arithmeticInput';
+import {FieldValueOption, QueryField} from 'sentry/views/eventsV2/table/queryField';
 
-import {SortDirection, sortDirections} from '../../utils';
+import {
+  filterPrimaryOptions,
+  getAmendedFieldOptions,
+  SortDirection,
+  sortDirections,
+} from '../../utils';
 
 const CUSTOM_EQUATION_VALUE = 'custom-equation';
 
@@ -22,20 +38,27 @@ interface Values {
 }
 
 interface Props {
+  displayType: DisplayType;
   onChange: (values: Values) => void;
   sortByOptions: SelectValue<string>[];
+  tags: TagCollection;
   values: Values;
   widgetType: WidgetType;
+  explodedField?: any;
   hasGroupBy?: boolean;
 }
 
 export function SortBySelectors({
+  displayType,
   values,
   sortByOptions,
   widgetType,
   onChange,
   hasGroupBy,
+  tags,
+  explodedField,
 }: Props) {
+  const organization = useOrganization();
   const [showCustomEquation, setShowCustomEquation] = useState(false);
   const [customEquation, setCustomEquation] = useState<Values>({
     sortBy: `${EQUATION_PREFIX}`,
@@ -52,6 +75,11 @@ export function SortBySelectors({
     setShowCustomEquation(isSortingByEquation);
   }, [values.sortBy]);
 
+  console.log('exploded field', explodedField);
+  console.log('string?', typeof explodedField);
+  if (typeof explodedField === 'string') {
+    console.log('string', explodeField({field: explodedField}));
+  }
   return (
     <Wrapper>
       <Tooltip
@@ -72,6 +100,7 @@ export function SortBySelectors({
           }))}
           value={values.sortDirection}
           onChange={(option: SelectValue<SortDirection>) => {
+            debugger;
             onChange({
               sortBy: values.sortBy,
               sortDirection: option.value,
@@ -79,7 +108,39 @@ export function SortBySelectors({
           }}
         />
       </Tooltip>
-      <SelectControl
+      <Measurements>
+        {({measurements}) => (
+          <QueryField
+            fieldValue={explodeField({field: values.sortBy})}
+            fieldOptions={getAmendedFieldOptions({measurements, organization, tags})}
+            onChange={value => {
+              const parsedValue = generateFieldAsString(value);
+              const isSortingByCustomEquation = parsedValue === CUSTOM_EQUATION_VALUE;
+              setShowCustomEquation(isSortingByCustomEquation);
+              if (isSortingByCustomEquation) {
+                onChange(customEquation);
+                return;
+              }
+
+              onChange({
+                sortBy: parsedValue,
+                sortDirection: values.sortDirection,
+              });
+            }}
+            // filterPrimaryOptions={option =>
+            //   filterPrimaryOptions({
+            //     option,
+            //     widgetType,
+            //     displayType,
+            //   })
+            // }
+            // filterAggregateParameters={filterAggregateParameters(fieldValue)}
+            // otherColumns={aggregates}
+            // noFieldsMessage={noFieldsMessage}
+          />
+        )}
+      </Measurements>
+      {/* <SelectControl
         name="sortBy"
         menuPlacement="auto"
         placeholder={`${t('Select a column')}\u{2026}`}
@@ -103,7 +164,7 @@ export function SortBySelectors({
             sortDirection: values.sortDirection,
           });
         }}
-      />
+      /> */}
       {showCustomEquation && (
         <ArithmeticInputWrapper>
           <ArithmeticInput
