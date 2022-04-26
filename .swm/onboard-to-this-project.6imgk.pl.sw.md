@@ -9,6 +9,7 @@ app_version: 0.8.2-0
 1. [Setting up your environment](setting-up-your-environment.ncu19.sw.md)
 2. [Python Dependencies](python-dependencies.opzh6.sw.md)
 3. [How we test](how-we-test.91kw1.pl.sw.md)
+4. [Ananlytics](ananlytics.2acnz.sw.md)
 
 
 <br/>
