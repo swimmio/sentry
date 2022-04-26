@@ -5,6 +5,11 @@ file_version: 1.0.2
 app_version: 0.8.2-0
 ---
 
+<!-- Intro - Do not remove this comment -->
+We use many feature flags. In this playlist we will cover how to create feature flags, as well as how to check them.
+
+<br/>
+
 <!-- Steps - Do not remove this comment -->
 1. [Creating Feature Flags](creating-feature-flags.54lox.sw.md)
 2. [Checking Feature Flags](checking-feature-flags.1y1z6.sw.md)
