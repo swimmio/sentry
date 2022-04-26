@@ -4,11 +4,51 @@ name: Creating a Django Serializer
 file_version: 1.0.2
 app_version: 0.8.2-0
 file_blobs:
-  src/sentry/api/endpoints/assistant.py: 8d973e7b452a8253d238e5f87bdbfe3bc6245459
   src/sentry/api/endpoints/api_tokens.py: ee8354987672b97ef675935cc17f20659c6c08de
+  src/sentry/api/endpoints/assistant.py: 8d973e7b452a8253d238e5f87bdbfe3bc6245459
 ---
 
 Django Rest Framework's serializers are used to handle input validation and transformation for data coming into Sentry.
+
+<br/>
+
+### Usage
+
+In an endpoint, this is a typical use of a Django Rest Framework Serializer.
+
+We initialize a `serializer`[<sup id="ZdHb6t">↓</sup>](#f-ZdHb6t) with the `request.data`[<sup id="Z8sAml">↓</sup>](#f-Z8sAml) and use `is_valid`[<sup id="t8ns5">↓</sup>](#f-t8ns5) to do the actual validation.
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 src/sentry/api/endpoints/api_tokens.py
+```python
+⬜ 28     
+⬜ 29             return Response(serialize(token_list, request.user))
+⬜ 30     
+🟩 31         def post(self, request: Request) -> Response:
+🟩 32             serializer = ApiTokenSerializer(data=request.data)
+🟩 33     
+🟩 34             if serializer.is_valid():
+🟩 35                 result = serializer.validated_data
+🟩 36     
+🟩 37                 token = ApiToken.objects.create(
+🟩 38                     user=request.user, scope_list=result["scopes"], refresh_token=None, expires_at=None
+🟩 39                 )
+🟩 40     
+🟩 41                 capture_security_activity(
+🟩 42                     account=request.user,
+🟩 43                     type="api-token-generated",
+🟩 44                     actor=request.user,
+🟩 45                     ip_address=request.META["REMOTE_ADDR"],
+🟩 46                     context={},
+🟩 47                     send_email=True,
+🟩 48                 )
+🟩 49     
+🟩 50                 return Response(serialize(token, request.user), status=201)
+🟩 51             return Response(serializer.errors, status=400)
+🟩 52     
+⬜ 53         def delete(self, request: Request):
+⬜ 54             token = request.data.get("token")
+⬜ 55             if not token:
+```
 
 <br/>
 
@@ -64,44 +104,6 @@ If a field does not match what your validate method is expecting raise a `serial
 
 <br/>
 
-### Usage
-
-In an endpoint, this is a typical use of a Django Rest Framework Serializer:
-<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
-### 📄 src/sentry/api/endpoints/api_tokens.py
-```python
-⬜ 28     
-⬜ 29             return Response(serialize(token_list, request.user))
-⬜ 30     
-🟩 31         def post(self, request: Request) -> Response:
-🟩 32             serializer = ApiTokenSerializer(data=request.data)
-🟩 33     
-🟩 34             if serializer.is_valid():
-🟩 35                 result = serializer.validated_data
-🟩 36     
-🟩 37                 token = ApiToken.objects.create(
-🟩 38                     user=request.user, scope_list=result["scopes"], refresh_token=None, expires_at=None
-🟩 39                 )
-🟩 40     
-🟩 41                 capture_security_activity(
-🟩 42                     account=request.user,
-🟩 43                     type="api-token-generated",
-🟩 44                     actor=request.user,
-🟩 45                     ip_address=request.META["REMOTE_ADDR"],
-🟩 46                     context={},
-🟩 47                     send_email=True,
-🟩 48                 )
-🟩 49     
-🟩 50                 return Response(serialize(token, request.user), status=201)
-🟩 51             return Response(serializer.errors, status=400)
-🟩 52     
-⬜ 53         def delete(self, request: Request):
-⬜ 54             token = request.data.get("token")
-⬜ 55             if not token:
-```
-
-<br/>
-
 **Validating Data**
 
 The Serializer from the Django Rest Framework will be used in methods with incoming data (i.e. `put` and `post` methods) that need to be validated. Once the serializer is instantiated, you can call `serializer.is_valid`[<sup id="iJd6r">↓</sup>](#f-iJd6r) to validate the data. `serializer.errors` will give feedback on specifically what was invalid about the data given.
@@ -136,9 +138,24 @@ The Serializer from the Django Rest Framework will be used in methods with incom
     guide_id = serializers.IntegerField(required=False)
 ```
 
+<span id="f-t8ns5">is_valid</span>[^](#t8ns5) - "src/sentry/api/endpoints/api_tokens.py" L34
+```python
+        if serializer.is_valid():
+```
+
+<span id="f-Z8sAml">request.data</span>[^](#Z8sAml) - "src/sentry/api/endpoints/api_tokens.py" L32
+```python
+        serializer = ApiTokenSerializer(data=request.data)
+```
+
 <span id="f-1W3QWH">required</span>[^](#1W3QWH) - "src/sentry/api/endpoints/assistant.py" L20
 ```python
     guide = serializers.CharField(required=False)
+```
+
+<span id="f-ZdHb6t">serializer</span>[^](#ZdHb6t) - "src/sentry/api/endpoints/api_tokens.py" L32
+```python
+        serializer = ApiTokenSerializer(data=request.data)
 ```
 
 <span id="f-iJd6r">serializer.is_valid</span>[^](#iJd6r) - "src/sentry/api/endpoints/api_tokens.py" L34
