@@ -16,7 +16,7 @@ This document covers how to create a new Model Serializer.
 
 A Model Serializer is a home-grown version of Serializers, used only for outgoing data.
 
-Some examples of `Serializer`[<sup id="1Aq57B">↓</sup>](#f-1Aq57B)s are `ProjectSummarySerializer`[<sup id="10jS8T">↓</sup>](#f-10jS8T), are a home grown version that is used only for outgoing data`AlertRuleTriggerActionSerializer`[<sup id="2iiHPl">↓</sup>](#f-2iiHPl), `StreamGroupSerializerSnuba`[<sup id="15zLgw">↓</sup>](#f-15zLgw), and `OrganizationMemberWithTeamsSerializer`[<sup id="12RSvr">↓</sup>](#f-12RSvr). Note: some of these examples inherit indirectly from `Serializer`[<sup id="1Aq57B">↓</sup>](#f-1Aq57B).
+Some examples of `Serializer`[<sup id="1Aq57B">↓</sup>](#f-1Aq57B)s are `AlertRuleTriggerActionSerializer`[<sup id="2iiHPl">↓</sup>](#f-2iiHPl), `StreamGroupSerializerSnuba`[<sup id="15zLgw">↓</sup>](#f-15zLgw), and `OrganizationMemberWithTeamsSerializer`[<sup id="12RSvr">↓</sup>](#f-12RSvr). Note: some of these examples inherit indirectly from `Serializer`[<sup id="1Aq57B">↓</sup>](#f-1Aq57B).
 
 <br/>
 
