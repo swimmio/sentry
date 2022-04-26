@@ -1,15 +1,15 @@
 ---
 id: 5dd9i
-name: Creating a Serializer
+name: Creating a Model Serializer
 file_version: 1.0.2
 app_version: 0.8.2-0
 file_blobs:
   src/sentry/incidents/logic.py: 3b783f85380afac09f108676aba1f2240c4e5a28
   src/sentry/api/serializers/models/alert_rule_trigger_action.py: 1f2fedc2dc96208a4d055671d16fef7de0b9496a
-  src/sentry/api/serializers/base.py: a2148202429f2a06d0138c015b3201e7564d62f2
-  src/sentry/api/serializers/models/project.py: 7ecfd0afe32f12032277578ba729e0eb546379a8
-  src/sentry/api/serializers/models/group.py: 9f63319c44965f2a2440fff3a8da97dcef869dad
   src/sentry/api/serializers/models/organization_member/expand/teams.py: fd024771304fc26011c974ce475e2ab829b59157
+  src/sentry/api/serializers/models/project.py: 7ecfd0afe32f12032277578ba729e0eb546379a8
+  src/sentry/api/serializers/base.py: a2148202429f2a06d0138c015b3201e7564d62f2
+  src/sentry/api/serializers/models/group.py: 9f63319c44965f2a2440fff3a8da97dcef869dad
 ---
 
 This document covers how to create a new Model Serializer.
@@ -89,7 +89,7 @@ We first need to define our class in the relevant file, and inherit from `Serial
 
 <br/>
 
-### 2\. Implement `serialize`[<sup id="ZpMg6k">↓</sup>](#f-ZpMg6k)
+### 2\. Implement serialize
 
 <br/>
 
