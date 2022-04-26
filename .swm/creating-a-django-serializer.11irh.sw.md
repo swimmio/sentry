@@ -1,6 +1,6 @@
 ---
 id: 11irh
-name: Create a Django Serializer
+name: Creating a Django Serializer
 file_version: 1.0.2
 app_version: 0.8.2-0
 file_blobs:
