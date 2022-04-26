@@ -41,7 +41,6 @@ To enable a feature, we need to update `📄 docker/sentry.conf.py` , for exampl
 
 ```
 SENTRY_FEATURES["organizations:breadcrumb-linked-event"] = True
-.
 ```
 
 Generally you want your feature names to be unique to help in their removal. For example a feature flag like `trends` may prove difficult to find because `trends` may appear throughout the codebase. But a name like `performance-trends-view` is more likely to be unique and easier to remove later.
@@ -58,7 +57,7 @@ Features can be scoped by organization, and projects. If you're not confident yo
 
 `📄 src/sentry/conf/server.py` contains many of the default settings in the application. Here you will add your feature, and decide what default value it should hold unless specified by the user.
 
-The `SENTRY_FEATURES`[<sup id="Z3CxwT">↓</sup>](#f-Z3CxwT)  dictionary contains all the features in the application with their corresponding scope. Your feature should start off disabled by default (`False`[<sup id="Z24Iltd">↓</sup>](#f-Z24Iltd)) :
+The `SENTRY_FEATURES`[<sup id="Z3CxwT">↓</sup>](#f-Z3CxwT)  dictionary contains all the features in the application with their corresponding scope. Your feature should start off disabled by default (`False`[<sup id="Z24Iltd">↓</sup>](#f-Z24Iltd) :
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/sentry/conf/server.py
 ```python
