@@ -5,6 +5,11 @@ file_version: 1.0.2
 app_version: 0.8.2-0
 ---
 
+<!-- Intro - Do not remove this comment -->
+In this playlist we will cover our testing methodology, go over the types of tests we have and how to write them.
+
+<br/>
+
 <!-- Steps - Do not remove this comment -->
 1. [Tests setup](tests-setup.4im8f.sw.md)
 2. [Python Tests](python-tests.07tsg.sw.md)
