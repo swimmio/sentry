@@ -18,7 +18,7 @@ Our acceptance tests leverage selenium and chromedriver to simulate a user using
 2.  To prepare snapshots for visual regression tests via our visual regression GitHub Actions.
     
 
-Acceptance tests can be found in `📄 tests/acceptance` and run locally with `pytest`.
+Acceptance tests can be found in tests/acceptance and run locally with `pytest`.
 
 ### Running acceptance tests
 
@@ -118,6 +118,14 @@ The visual regression tests are run as part of our Github Actions.
 ⬜ 108          - name: Handle artifacts
 ⬜ 109            uses: ./.github/actions/artifacts
 ```
+
+<br/>
+
+Then we can see in our Pull Request, what snapshots have changed, for example [here](https://github.com/getsentry/sentry/pull/33993/checks?check_run_id=6185913107):
+
+<br/>
+
+<div align="center"><img src="https://firebasestorage.googleapis.com/v0/b/swimmio-content/o/repositories%2FZ2l0aHViJTNBJTNBc2VudHJ5JTNBJTNBc3dpbW1pbw%3D%3D%2Fcf834b49-eda9-4bf9-9e76-23985050243f.png?alt=media&token=224e4d2a-abc7-4e6b-9798-a93a0175ad17" style="width:'100%'"/></div>
 
 <br/>
 
