@@ -19,28 +19,34 @@ Endpoint integration tests is where the bulk of our test suite is focused. These
 
 You can use pytest to run a single directory, single file, or single test depending on the scope of your changes:
 
-```
-# Run tests for an entire directory
-pytest tests/sentry/api/endpoints/
+### Run tests for an entire directory
 
-# Run tests for all files matching a pattern in a directory
-pytest tests/sentry/api/endpoints/test_organization_*.py
+`pytest tests/sentry/api/endpoints/`
 
-# Run test from a single file
-pytest tests/sentry/api/endpoints/test_organization_group_index.py
+### Run tests for all files matching a pattern in a directory
 
-# Run a single test
-pytest tests/snuba/api/endpoints/test_organization_events_distribution.py::OrganizationEventsDistributionEndpointTest::test_this_thing
+`pytest tests/sentry/api/endpoints/test_organization_*.py`
 
-# Run all tests in a file that match a substring
-pytest tests/snuba/api/endpoints/test_organization_events_distribution.py -k method_name
+### Run test from a single file
 
-# When running tests Django rebuilds the database on every run, which can make your test startup time slow. To avoid this you can use
-# the `--reuse-db` flag, so that the database will persist between runs. This should significantly improve your test startup time after
-# the first time you use it.
-# Note: If the schema changes you may need to run with `--create-db` once so that you have the latest schema.
-pytest --reuse-db tests/sentry/api/endpoints/
-```
+`pytest tests/sentry/api/endpoints/test_organization_group_index.py`
+
+### Run a single test
+
+`pytest tests/snuba/api/endpoints/test_organization_events_distribution.py::OrganizationEventsDistributionEndpointTest::test_this_thing`
+
+### Run all tests in a file that matches a substring
+
+`pytest tests/snuba/api/endpoints/test_organization_events_distribution.py -k method_name`
+
+  
+When running tests Django rebuilds the database on every run, which can make your test startup time slow. To avoid this you can use the `--reuse-db` flag, so that the database will persist between runs.
+
+This should significantly improve your test startup time after the first time you use it.
+
+Note: If the schema changes you may need to run with `--create-db` once so that you have the latest schema:
+
+`pytest --reuse-db tests/sentry/api/endpoints/`
 
 Some frequently used options for pytest are:
 
@@ -260,14 +266,14 @@ DETECT_TESTCASE_MISUSE = os.environ.get("SENTRY_DETECT_TESTCASE_MISUSE") == "1"
 class QueryIntegrationTest(SnubaTestCase, TestCase):
 ```
 
-<span id="f-1sdxx9">store_event</span>[^](#1sdxx9) - "tests/sentry/snuba/test_discover.py" L1335
-```python
-        stored_event = self.store_event(data, project_id=project.id)
-```
-
 <span id="f-2v1t7x">store_event</span>[^](#2v1t7x) - "tests/sentry/snuba/test_discover.py" L42
 ```python
         self.event = self.store_event(
+```
+
+<span id="f-1sdxx9">store_event</span>[^](#1sdxx9) - "tests/sentry/snuba/test_discover.py" L1335
+```python
+        stored_event = self.store_event(data, project_id=project.id)
 ```
 
 <span id="f-Z1aLda9">timestamp</span>[^](#Z1aLda9) - "tests/sentry/snuba/test_discover.py" L49
