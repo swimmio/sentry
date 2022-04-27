@@ -4,22 +4,53 @@ name: Jest Tests
 file_version: 1.0.2
 app_version: 0.8.2-0
 file_blobs:
+  package.json: b1f7cd3b70c6ee83f363e94c8f2d4d08ed190da6
+  tests/js/setup.ts: 27ccccec0f388c19bf5f8321a61503b8018590c8
   tests/js/spec/actionCreators/committers.spec.jsx: 76a0c759813cf656af4f61a7a48979b02bea01cd
 ---
 
 Our Jest suite covers providing functional and unit testing for frontend components. We favour writing functional tests that interact with components and observe outcomes (navigation, API calls) over checking prop passing and state mutations.
 
-```
-# Run jest in interactive mode
-yarn test
+<br/>
 
-# Run a single test
-yarn test tests/js/spec/views/issueList/overview.spec.js
+To run jest in interactive mode, use: `yarn`[<sup id="2j5fqg">↓</sup>](#f-2j5fqg) `test`[<sup id="TFTmf">↓</sup>](#f-TFTmf) .
+
+To run a single test you can use:
+
+`yarn test tests/js/spec/views/issueList/overview.spec.js`
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 package.json
+```json
+⬜ 210      "scripts": {
+⬜ 211        "test-wrap": "node scripts/test.js",
+🟩 212        "test": "yarn test-wrap --watch",
+⬜ 213        "test-ci": "yarn test-wrap --ci --coverage --runInBand",
+⬜ 214        "test-debug": "node --inspect-brk scripts/test.js --runInBand",
+⬜ 215        "test-precommit": "yarn test-wrap --bail --findRelatedTests -u",
+⬜ 216        "test-staged": "yarn test-wrap --findRelatedTests $(git diff --name-only --cached)",
 ```
+
+<br/>
 
 ### API Fixtures
 
-Because our Jest tests run without an API we have a variety of fixture builders available to help generate API response payloads. The `TestStubs` global includes all the fixture functions in `📄 tests/js/sentry-test`
+<br/>
+
+Because our Jest tests run without an API we have a variety of fixture builders available to help generate API response payloads. The `TestStubs`[<sup id="ZaB2AK">↓</sup>](#f-ZaB2AK) global includes all the fixture functions in `📄 tests/js/sentry-test`
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 tests/js/setup.ts
+```typescript
+⬜ 235    /**
+⬜ 236     * Test Globals
+⬜ 237     */
+⬜ 238    declare global {
+⬜ 239      /**
+⬜ 240       * Test stubs are automatically loaded from the fixtures/js-stubs
+⬜ 241       * directory. Use these for setting up test data.
+⬜ 242       */
+⬜ 243      // eslint-disable-next-line no-var
+🟩 244      var TestStubs: TestStubTypes;
+```
 
 <br/>
 
@@ -54,6 +85,21 @@ The Snuba test suite is the only test suite that will actually have Kafka runnin
 <span id="f-LnFpM">MockApiClient.addMockResponse</span>[^](#LnFpM) - "tests/js/spec/actionCreators/committers.spec.jsx" L26
 ```javascript
     mockResponse = MockApiClient.addMockResponse({
+```
+
+<span id="f-TFTmf">test</span>[^](#TFTmf) - "package.json" L211
+```json
+    "test-wrap": "node scripts/test.js",
+```
+
+<span id="f-ZaB2AK">TestStubs</span>[^](#ZaB2AK) - "tests/js/setup.ts" L244
+```typescript
+  var TestStubs: TestStubTypes;
+```
+
+<span id="f-2j5fqg">yarn</span>[^](#2j5fqg) - "package.json" L212
+```json
+    "test": "yarn test-wrap --watch",
 ```
 
 <br/>
