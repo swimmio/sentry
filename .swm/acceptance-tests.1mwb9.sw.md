@@ -4,8 +4,10 @@ name: Acceptance Tests
 file_version: 1.0.2
 app_version: 0.8.2-0
 file_blobs:
+  static/app/views/settings/organizationTeams/organizationTeams.tsx: 258b09184285fcf1ea2cc66cfd863c771a33b9e0
   tests/acceptance/test_teams_list.py: b94f940b61149f9455a7ec39cfb964284a34a75f
   tests/acceptance/test_accept_organization_invite.py: 3ac70816cc8676f387105d6abc3a94a846f4dd8f
+  .github/workflows/acceptance.yml: a44f32212e125603ca657c1b54a07c6bf7ed159a
   static/app/views/settings/projectSecurityHeaders/reportUri.tsx: 0b337fbf7e07aed47bc57aab4afba28a40dcb972
 ---
 
@@ -22,43 +24,58 @@ Acceptance tests can be found in `📄 tests/acceptance` and run locally with `p
 
 When you run acceptance tests, webpack will be run automatically to build static assets. If you change Javascript files while creating or modifying acceptance tests, you'll need to `rm .webpack.meta` after each change to trigger a rebuild on static assets.
 
+#### Run a single acceptance test
+
+`pytest tests/acceptance/test_organization_group_index.py -k test_with_onboarding`
+
+#### Run the browser with a head so you can watch it
+
+`pytest tests/acceptance/test_organization_group_index.py --no-headless=true -k test_with_onboarding`
+
+#### Open each snapshot image
+
 ```
-# Run a single acceptance test.
-pytest tests/acceptance/test_organization_group_index.py \
-    -k test_with_onboarding
-
-# Run the browser with a head so you can watch it.
-pytest tests/acceptance/test_organization_group_index.py \
-    --no-headless=true \
-    -k test_with_onboarding
-
-# Open each snapshot image
 SENTRY_SCREENSHOT=1 VISUAL_SNAPSHOT_ENABLE=1 \
-    pytest tests/acceptance/test_organization_group_index.py \
-    -k test_with_onboarding
+pytest tests/acceptance/test_organization_group_index.py \
+-k test_with_onboarding 
 ```
 
 **Note**: If you're seeing:
 
 `WARNING: Failed to gather log types: Message: unknown command: Cannot call non W3C standard command while in W3C mode` it means that `Webpack` hasn't compiled assets properly.
 
-<br/>
-
 ### Locating Elements
 
-Because we use emotion our classnames are generally not useful to browser automation. Instead we liberally use `data-test-id`[<sup id="Z1AxvOK">↓</sup>](#f-Z1AxvOK) attributes to define hook points for browser automation and Jest tests. For example:
+<br/>
+
+Because we use emotion our classnames are generally not useful to browser automation. Instead we liberally use `data-test-id`[<sup id="Zkj6Ah">↓</sup>](#f-Zkj6Ah) attributes to define hook points for browser automation and Jest tests. For example:
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 static/app/views/settings/organizationTeams/organizationTeams.tsx
+```tsx
+⬜ 87     
+⬜ 88       return (
+🟩 89         <div data-test-id="team-list">
+⬜ 90           <SentryDocumentTitle title={title} orgSlug={organization.slug} />
+⬜ 91           <SettingsPageHeader title={title} action={action} />
+```
+
+<br/>
+
+And then we can reference it in the test, like so:
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 tests/acceptance/test_teams_list.py
 ```python
-🟩 18         def test_simple(self):
-🟩 19             self.project.update(first_event=timezone.now())
-🟩 20             self.browser.get(self.path)
-🟩 21             self.browser.wait_until_not('[data-test-id="loading-indicator"]')
-🟩 22             self.browser.wait_until_test_id("team-list")
-🟩 23             self.browser.snapshot("organization teams list")
+⬜ 18         def test_simple(self):
+⬜ 19             self.project.update(first_event=timezone.now())
+⬜ 20             self.browser.get(self.path)
+⬜ 21             self.browser.wait_until_not('[data-test-id="loading-indicator"]')
+⬜ 22             self.browser.wait_until_test_id("team-list")
+⬜ 23             self.browser.snapshot("organization teams list")
 ⬜ 24     
 ⬜ 25             # team details link
-⬜ 26             self.browser.click('[data-test-id="team-list"] a[href]:first-child')
+🟩 26             self.browser.click('[data-test-id="team-list"] a[href]:first-child')
+⬜ 27             self.browser.wait_until_not('[data-test-id="loading-indicator"]')
+⬜ 28             self.browser.snapshot("organization team - members list")
 ```
 
 <br/>
@@ -82,6 +99,27 @@ All of our data is loaded asynchronously into the front-end and acceptance tests
 ### Visual Regression
 
 Pixels Matter and because of that we use visual regressions to help catch unintended changes to how Sentry is rendered. During acceptance tests we capture screenshots and compare the screenshots in your pull request to approved baselines.
+
+<br/>
+
+The visual regression tests are run as part of our Github Actions.
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 .github/workflows/acceptance.yml
+```yaml
+⬜ 99               base-path: .artifacts/visual-snapshots/jest
+⬜ 100              css-path: src/sentry/static/sentry/dist/entrypoints/sentry.css
+⬜ 101    
+🟩 102          - name: Save snapshots
+🟩 103            uses: getsentry/action-visual-snapshot@v2
+🟩 104            with:
+🟩 105              save-only: true
+🟩 106              snapshot-path: .artifacts/visual-snapshots
+⬜ 107    
+⬜ 108          - name: Handle artifacts
+⬜ 109            uses: ./.github/actions/artifacts
+```
+
+<br/>
 
 While we have fairly wide coverage with visual regressions there are a few important blind spots:
 
@@ -116,9 +154,9 @@ Because visual regression compares image snapshots, and a significant portion of
 <!-- THIS IS AN AUTOGENERATED SECTION. DO NOT EDIT THIS SECTION DIRECTLY -->
 ### Swimm Note
 
-<span id="f-Z1AxvOK">data-test-id</span>[^](#Z1AxvOK) - "tests/acceptance/test_teams_list.py" L21
-```python
-        self.browser.wait_until_not('[data-test-id="loading-indicator"]')
+<span id="f-Zkj6Ah">data-test-id</span>[^](#Zkj6Ah) - "static/app/views/settings/organizationTeams/organizationTeams.tsx" L89
+```tsx
+    <div data-test-id="team-list">
 ```
 
 <span id="f-Z1hAPrL">getDynamicText</span>[^](#Z1hAPrL) - "static/app/views/settings/projectSecurityHeaders/reportUri.tsx" L13
