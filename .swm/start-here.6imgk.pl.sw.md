@@ -1,15 +1,23 @@
 ---
 id: 6imgk
-name: Onboard to this project
+name: Start Here
 file_version: 1.0.2
 app_version: 0.8.2-0
 ---
+
+<!-- Intro - Do not remove this comment -->
+Welcome to our documentation of Sentry! This playlist will get you ready to contribute to this codebase 💪🏻
+
+Note, this is not Sentry's official documentation, and serves as an example for using [Swimm](https://swimm.io).
+
+<br/>
 
 <!-- Steps - Do not remove this comment -->
 1. [Setting up your environment](setting-up-your-environment.ncu19.sw.md)
 2. [Python Dependencies](python-dependencies.opzh6.sw.md)
 3. [How we test](how-we-test.91kw1.pl.sw.md)
 4. [Ananlytics](ananlytics.2acnz.sw.md)
+5. [Feature Flags](feature-flags.pkqwi.pl.sw.md)
 
 
 <br/>
