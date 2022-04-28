@@ -117,17 +117,6 @@ When using `store_event`[<sup id="2v1t7x">↓</sup>](#f-2v1t7x) , take care to s
 
 ### Setting options and feature flags
 
-```
-def test_success(self):
-    with self.feature('organization:new-thing'):
-        with self.options({'option': 'value'}):
-            # Run test logic with features and options set.
-
-    # Disable the new-thing feature.
-    with self.feature({'organization:new-thing': False}):
-        # Run you logic with a feature off.
-```
-
 <br/>
 
 If your tests are for feature flagged endpoints, or require specific options to be set, tou can use helper methods to mutate the configuration data into the right state - using `self.feature`[<sup id="ZPbXI5">↓</sup>](#f-ZPbXI5) :
