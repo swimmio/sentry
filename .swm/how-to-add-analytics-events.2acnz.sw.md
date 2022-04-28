@@ -1,6 +1,6 @@
 ---
 id: 2acnz
-name: Ananlytics
+name: How to add analytics events
 file_version: 1.0.2
 app_version: 0.8.2-0
 file_blobs:
