@@ -52,7 +52,7 @@ You'll need to first install Xcode CLI tools. Run this command and follow the in
 
 ### Brew
 
-Install [Homebrew](http://brew.sh), and then the following command to install the various system packages as listed in Sentry's `📄 Brewfile` .
+Install [Homebrew](http://brew.sh), and then the following command to install the various system packages as listed in Sentry's Brewfile .
 
 ```
 brew bundle --verbose
@@ -129,9 +129,7 @@ We utilize [pyenv](https://github.com/pyenv/pyenv) to install and manage Python 
 
 To install the required version of Python you'll need to run the following command. This will take a while, since your computer is actually compiling Python!
 
-```
-make setup-pyenv
-```
+`make`[<sup id="17Twvl">↓</sup>](#f-17Twvl) `setup-pyenv`[<sup id="1T8dEY">↓</sup>](#f-1T8dEY)
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 .github/workflows/development-environment.yml
 ```yaml
@@ -168,11 +166,8 @@ You're now ready to create a Python virtual environment and activate it using th
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 .github/workflows/development-environment.yml
 ```yaml
-⬜ 103              [[ $(which python) == "${HOME}/.pyenv/shims/python" ]]
-⬜ 104              [[ $(python -V) == "Python $(cat .python-version)" ]]
 🟩 105              python -m venv .venv
 🟩 106              source .venv/bin/activate
-⬜ 107              [[ $(python -V) == "Python $(cat .python-version)" ]]
 ```
 
 <br/>
@@ -365,7 +360,7 @@ Some services are not run in all situations, among those are Relay and the inges
 
 <br/>
 
-Additionally you can explicitly control this during devserver usage with the \--ingest flag. The devservices command will not update Relay automatically in that case, to do this manually run:
+Additionally you can explicitly control this during devserver usage with the --ingest flag. The devservices command will not update Relay automatically in that case, to do this manually run:
 
 ```
 sentry devservices up --skip-only-if relay
@@ -401,14 +396,14 @@ direnv allow || {
       - name: make bootstrap
 ```
 
-<span id="f-Z1HyaWl">devserver</span>[^](#Z1HyaWl) - "src/sentry/conf/server.py" L1758
-```python
-# generate fake data for local testing. You can also manually enable relay with the `--ingest` flag to `devserver`.
-```
-
 <span id="f-Z2sHOkq">devserver</span>[^](#Z2sHOkq) - "tests/js/spec/components/commandLine.spec.tsx" L7
 ```tsx
     const children = 'sentry devserver --workers';
+```
+
+<span id="f-Z1HyaWl">devserver</span>[^](#Z1HyaWl) - "src/sentry/conf/server.py" L1758
+```python
+# generate fake data for local testing. You can also manually enable relay with the `--ingest` flag to `devserver`.
 ```
 
 <span id="f-Z1VNq9m">devservices</span>[^](#Z1VNq9m) - ".github/actions/setup-sentry/action.yml" L179
@@ -431,6 +426,11 @@ direnv allow || {
         sentry init
 ```
 
+<span id="f-17Twvl">make</span>[^](#17Twvl) - ".github/workflows/development-environment.yml" L100
+```yaml
+          make setup-pyenv
+```
+
 <span id="f-1vgDTg">postgres</span>[^](#1vgDTg) - ".github/actions/setup-sentry/action.yml" L179
 ```yaml
         sentry devservices up redis postgres
@@ -441,14 +441,9 @@ direnv allow || {
         sentry devservices up redis postgres
 ```
 
-<span id="f-1KrqtB">sentry</span>[^](#1KrqtB) - "tests/js/spec/components/commandLine.spec.tsx" L7
-```tsx
-    const children = 'sentry devserver --workers';
-```
-
-<span id="f-21Wz5e">sentry</span>[^](#21Wz5e) - ".github/workflows/migrations.yml" L66
+<span id="f-27qGRh">sentry</span>[^](#27qGRh) - ".github/actions/setup-sentry/action.yml" L176
 ```yaml
-          sentry upgrade --noinput
+        sentry init
 ```
 
 <span id="f-2dUcOT">sentry</span>[^](#2dUcOT) - ".github/actions/setup-sentry/action.yml" L179
@@ -456,14 +451,24 @@ direnv allow || {
         sentry devservices up redis postgres
 ```
 
-<span id="f-27qGRh">sentry</span>[^](#27qGRh) - ".github/actions/setup-sentry/action.yml" L176
+<span id="f-21Wz5e">sentry</span>[^](#21Wz5e) - ".github/workflows/migrations.yml" L66
 ```yaml
-        sentry init
+          sentry upgrade --noinput
+```
+
+<span id="f-1KrqtB">sentry</span>[^](#1KrqtB) - "tests/js/spec/components/commandLine.spec.tsx" L7
+```tsx
+    const children = 'sentry devserver --workers';
 ```
 
 <span id="f-1FAzQX">SENTRY_USE_RELAY</span>[^](#1FAzQX) - "src/sentry/conf/server.py" L1761
 ```python
 SENTRY_USE_RELAY = False
+```
+
+<span id="f-1T8dEY">setup-pyenv</span>[^](#1T8dEY) - ".github/workflows/development-environment.yml" L100
+```yaml
+          make setup-pyenv
 ```
 
 <span id="f-Z23KAaf">up</span>[^](#Z23KAaf) - ".github/actions/setup-sentry/action.yml" L179
