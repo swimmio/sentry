@@ -396,14 +396,14 @@ direnv allow || {
       - name: make bootstrap
 ```
 
-<span id="f-Z1HyaWl">devserver</span>[^](#Z1HyaWl) - "src/sentry/conf/server.py" L1758
-```python
-# generate fake data for local testing. You can also manually enable relay with the `--ingest` flag to `devserver`.
-```
-
 <span id="f-Z2sHOkq">devserver</span>[^](#Z2sHOkq) - "tests/js/spec/components/commandLine.spec.tsx" L7
 ```tsx
     const children = 'sentry devserver --workers';
+```
+
+<span id="f-Z1HyaWl">devserver</span>[^](#Z1HyaWl) - "src/sentry/conf/server.py" L1758
+```python
+# generate fake data for local testing. You can also manually enable relay with the `--ingest` flag to `devserver`.
 ```
 
 <span id="f-Z1VNq9m">devservices</span>[^](#Z1VNq9m) - ".github/actions/setup-sentry/action.yml" L179
@@ -441,14 +441,9 @@ direnv allow || {
         sentry devservices up redis postgres
 ```
 
-<span id="f-1KrqtB">sentry</span>[^](#1KrqtB) - "tests/js/spec/components/commandLine.spec.tsx" L7
-```tsx
-    const children = 'sentry devserver --workers';
-```
-
-<span id="f-21Wz5e">sentry</span>[^](#21Wz5e) - ".github/workflows/migrations.yml" L66
+<span id="f-27qGRh">sentry</span>[^](#27qGRh) - ".github/actions/setup-sentry/action.yml" L176
 ```yaml
-          sentry upgrade --noinput
+        sentry init
 ```
 
 <span id="f-2dUcOT">sentry</span>[^](#2dUcOT) - ".github/actions/setup-sentry/action.yml" L179
@@ -456,9 +451,14 @@ direnv allow || {
         sentry devservices up redis postgres
 ```
 
-<span id="f-27qGRh">sentry</span>[^](#27qGRh) - ".github/actions/setup-sentry/action.yml" L176
+<span id="f-21Wz5e">sentry</span>[^](#21Wz5e) - ".github/workflows/migrations.yml" L66
 ```yaml
-        sentry init
+          sentry upgrade --noinput
+```
+
+<span id="f-1KrqtB">sentry</span>[^](#1KrqtB) - "tests/js/spec/components/commandLine.spec.tsx" L7
+```tsx
+    const children = 'sentry devserver --workers';
 ```
 
 <span id="f-1FAzQX">SENTRY_USE_RELAY</span>[^](#1FAzQX) - "src/sentry/conf/server.py" L1761
