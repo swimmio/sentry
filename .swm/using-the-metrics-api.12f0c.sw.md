@@ -1,6 +1,6 @@
 ---
 id: 12f0c
-name: Using Datadog and Metrics
+name: Using the Metrics API
 file_version: 1.0.2
 app_version: 0.8.6-1
 file_blobs:
